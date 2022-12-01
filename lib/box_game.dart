@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:math' hide log;
 
+import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +11,6 @@ import 'fly.dart';
 class BoxGame extends FlameGame with HasTappableComponents {
   double tileSize = 0;
   final Random random = Random();
-
-  @override
-  Color backgroundColor() => const Color(0xff576574);
 
   @override
   Future<void>? onLoad() async {
@@ -48,12 +46,25 @@ class BoxGame extends FlameGame with HasTappableComponents {
   void onGameResize(Vector2 canvasSize) {
     super.onGameResize(canvasSize);
 
-    tileSize = canvasSize.y / 9;
+    tileSize = canvasSize.x / 9;
+    _setBackground(canvasSize);
   }
 
   void spawnFly() {
     double x = random.nextDouble() * (size.toRect().width - tileSize);
     double y = random.nextDouble() * (size.toRect().height - tileSize);
     add(Fly(this, Vector2(x, y)));
+  }
+
+  void _setBackground(Vector2 canvasSize) async {
+    final sprite = await Sprite.load('bg/backyard.png');
+    final size = Vector2(tileSize * 9, tileSize * 23);
+    final position = Vector2(0, canvasSize.y - tileSize * 23);
+    final background = SpriteComponent(
+      sprite: sprite,
+      size: size,
+      position: position,
+    );
+    add(background);
   }
 }

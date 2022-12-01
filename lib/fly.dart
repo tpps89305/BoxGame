@@ -11,7 +11,7 @@ class Fly extends PositionComponent with Notifier, TapCallbacks {
   final BoxGame game;
   bool isDead = false;
 
-  Fly(this.game, Vector2 mposition) {
+  Fly(this.game, Vector2 mposition) : super(priority: 1) {
     flyPaint = Paint();
     flyPaint.color = const Color(0xffbadc58);
     size = Vector2(game.tileSize, game.tileSize);
@@ -26,7 +26,7 @@ class Fly extends PositionComponent with Notifier, TapCallbacks {
   @override
   void update(double dt) {
     if (isDead) {
-      position.add(Vector2(0, game.tileSize * 2 * dt));
+      position.add(Vector2(0, game.tileSize * 12 * dt));
       if (position.y > game.canvasSize.toRect().height) {
         removeFromParent();
       }
