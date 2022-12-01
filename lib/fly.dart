@@ -1,38 +1,44 @@
 import 'dart:ui';
 
 import 'package:box_game/box_game.dart';
+import 'package:flame/components.dart';
+import 'package:flame/experimental.dart';
 import 'package:flame/extensions.dart';
 
-class Fly {
-  late Rect flyRect;
+class Fly extends PositionComponent with Notifier, TapCallbacks {
   late Paint flyPaint;
 
   final BoxGame game;
   bool isDead = false;
-  bool isOffScreen = false;
 
-  Fly(this.game, Vector2 position) {
-    flyRect =
-        Rect.fromLTWH(position.x, position.y, game.tileSize, game.tileSize);
+  Fly(this.game, Vector2 mposition) {
     flyPaint = Paint();
     flyPaint.color = const Color(0xffbadc58);
+    size = Vector2(game.tileSize, game.tileSize);
+    position = mposition;
   }
 
+  @override
   void render(Canvas canvas) {
-    canvas.drawRect(flyRect, flyPaint);
+    canvas.drawRect(size.toRect(), flyPaint);
   }
 
+  @override
   void update(double dt) {
     if (isDead) {
-      flyRect = flyRect.translate(0, game.tileSize * 12 * dt);
-      if (flyRect.top > game.canvasSize.toRect().height) {
-        isOffScreen = true;
+      position.add(Vector2(0, game.tileSize * 2 * dt));
+      if (position.y > game.canvasSize.toRect().height) {
+        removeFromParent();
       }
     }
   }
 
-  void onTapDown() {
-    flyPaint.color = Color(0xffff4757);
-    isDead = true;
+  @override
+  void onTapDown(TapDownEvent event) {
+    if (!isDead) {
+      flyPaint.color = const Color(0xffff4757);
+      isDead = true;
+      notifyListeners();
+    }
   }
 }

@@ -1,4 +1,5 @@
-import 'dart:math';
+import 'dart:developer';
+import 'dart:math' hide log;
 
 import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
@@ -8,7 +9,6 @@ import 'fly.dart';
 
 class BoxGame extends FlameGame with HasTappableComponents {
   double tileSize = 0;
-  final flies = <Fly>[];
   final Random random = Random();
 
   @override
@@ -17,23 +17,31 @@ class BoxGame extends FlameGame with HasTappableComponents {
   @override
   Future<void>? onLoad() async {
     spawnFly();
+    final flyNotifier = componentsNotifier<Fly>();
+    flyNotifier.addListener(() {
+      final flies = flyNotifier.components;
+      log("listener ${flies.length}");
+      bool isShouldAddFly = true;
+      for (var fly in flies) {
+        if (!fly.isDead) {
+          isShouldAddFly = false;
+          break;
+        }
+      }
+      if (isShouldAddFly) {
+        spawnFly();
+      }
+    });
   }
 
   @override
   void update(double dt) {
     super.update(dt);
-    for (var element in flies) {
-      element.update(dt);
-    }
-    flies.removeWhere((element) => element.isOffScreen);
   }
 
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    for (var element in flies) {
-      element.render(canvas);
-    }
   }
 
   @override
@@ -46,17 +54,6 @@ class BoxGame extends FlameGame with HasTappableComponents {
   void spawnFly() {
     double x = random.nextDouble() * (size.toRect().width - tileSize);
     double y = random.nextDouble() * (size.toRect().height - tileSize);
-    flies.add(Fly(this, Vector2(x, y)));
-  }
-
-  @override
-  void onTapDown(TapDownEvent event) {
-    super.onTapDown(event);
-    for (var fly in flies) {
-      if (fly.flyRect.contains(event.canvasPosition.toOffset())) {
-        fly.onTapDown();
-        spawnFly();
-      }
-    }
+    add(Fly(this, Vector2(x, y)));
   }
 }
