@@ -1,16 +1,23 @@
 import 'dart:developer';
 import 'dart:math' hide log;
 
+import 'package:box_game/component/fly/agile_fly.dart';
+import 'package:box_game/component/fly/drooler_fly.dart';
+import 'package:box_game/component/fly/fly.dart';
+import 'package:box_game/component/fly/house_fly.dart';
+import 'package:box_game/component/fly/hungry_fly.dart';
+import 'package:box_game/component/fly/macho_fly.dart';
 import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
-import 'fly.dart';
-
 class BoxGame extends FlameGame with HasTappableComponents {
   double tileSize = 0;
   final Random random = Random();
+
+  @override
+  bool get debugMode => true;
 
   @override
   Future<void>? onLoad() async {
@@ -53,7 +60,26 @@ class BoxGame extends FlameGame with HasTappableComponents {
   void spawnFly() {
     double x = random.nextDouble() * (size.toRect().width - tileSize);
     double y = random.nextDouble() * (size.toRect().height - tileSize);
-    add(Fly(this, Vector2(x, y)));
+
+    switch (random.nextInt(5)) {
+      case 0:
+        add(HouseFly(this, Vector2(x, y)));
+        break;
+      case 1:
+        add(DroolerFly(this, Vector2(x, y)));
+        break;
+      case 2:
+        add(AglieFly(this, Vector2(x, y)));
+        break;
+      case 3:
+        add(MachoFly(this, Vector2(x, y)));
+        break;
+      case 4:
+        add(HungryFly(this, Vector2(x, y)));
+        break;
+      default:
+    }
+
   }
 
   void _setBackground(Vector2 canvasSize) async {
