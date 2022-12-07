@@ -1,14 +1,12 @@
-import 'package:box_game/box_game.dart';
 import 'package:flame/extensions.dart';
 
 import 'fly.dart';
 
 class HouseFly extends Fly {
-  final BoxGame boxGame;
   final Vector2 mposition;
 
   HouseFly(
-    this.boxGame,
+    boxGame,
     this.mposition,
   ) : super(
           boxGame,

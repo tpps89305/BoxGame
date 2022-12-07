@@ -1,13 +1,11 @@
-import 'package:box_game/box_game.dart';
 import 'package:box_game/component/fly/fly.dart';
 import 'package:flame/components.dart';
 
 class HungryFly extends Fly {
-  final BoxGame boxGame;
   final Vector2 mposition;
 
   HungryFly(
-    this.boxGame,
+    boxGame,
     this.mposition,
   ) : super(
           boxGame,
@@ -17,5 +15,6 @@ class HungryFly extends Fly {
             'flies/hungry-fly-2.png',
           ],
           deadSpriteFileName: 'flies/hungry-fly-dead.png',
+          tileScale: 1.65,
         );
 }

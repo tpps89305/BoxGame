@@ -1,13 +1,14 @@
-import 'package:box_game/box_game.dart';
 import 'package:box_game/component/fly/fly.dart';
 import 'package:flame/components.dart';
 
 class DroolerFly extends Fly {
-  final BoxGame boxGame;
   final Vector2 mposition;
 
+  @override
+  double get speed => 50;
+
   DroolerFly(
-    this.boxGame,
+    boxGame,
     this.mposition,
   ) : super(
           boxGame,
