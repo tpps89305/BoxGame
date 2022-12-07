@@ -25,7 +25,6 @@ class BoxGame extends FlameGame with HasTappableComponents {
     final flyNotifier = componentsNotifier<Fly>();
     flyNotifier.addListener(() {
       final flies = flyNotifier.components;
-      log("listener ${flies.length}");
       bool isShouldAddFly = true;
       for (var fly in flies) {
         if (!fly.isDead) {
@@ -58,8 +57,10 @@ class BoxGame extends FlameGame with HasTappableComponents {
   }
 
   void spawnFly() {
-    double x = random.nextDouble() * (size.toRect().width - tileSize);
-    double y = random.nextDouble() * (size.toRect().height - tileSize);
+    // 減去飛蠅的寬度，是避免生成在螢幕的邊緣。
+    // 乘上最大的飛蠅(MachoFly)的尺寸倍數
+    double x = random.nextDouble() * (size.toRect().width - tileSize * 2.025);
+    double y = random.nextDouble() * (size.toRect().height - tileSize * 2.025);
 
     switch (random.nextInt(5)) {
       case 0:
@@ -79,7 +80,6 @@ class BoxGame extends FlameGame with HasTappableComponents {
         break;
       default:
     }
-
   }
 
   void _setBackground(Vector2 canvasSize) async {
