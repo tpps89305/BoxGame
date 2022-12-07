@@ -1,12 +1,6 @@
-import 'dart:developer';
 import 'dart:math' hide log;
 
-import 'package:box_game/component/fly/agile_fly.dart';
-import 'package:box_game/component/fly/drooler_fly.dart';
-import 'package:box_game/component/fly/fly.dart';
-import 'package:box_game/component/fly/house_fly.dart';
-import 'package:box_game/component/fly/hungry_fly.dart';
-import 'package:box_game/component/fly/macho_fly.dart';
+import 'package:box_game/game_page.dart';
 import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
@@ -18,25 +12,6 @@ class BoxGame extends FlameGame with HasTappableComponents {
 
   @override
   bool get debugMode => true;
-
-  @override
-  Future<void>? onLoad() async {
-    spawnFly();
-    final flyNotifier = componentsNotifier<Fly>();
-    flyNotifier.addListener(() {
-      final flies = flyNotifier.components;
-      bool isShouldAddFly = true;
-      for (var fly in flies) {
-        if (!fly.isDead) {
-          isShouldAddFly = false;
-          break;
-        }
-      }
-      if (isShouldAddFly) {
-        spawnFly();
-      }
-    });
-  }
 
   @override
   void update(double dt) {
@@ -54,32 +29,7 @@ class BoxGame extends FlameGame with HasTappableComponents {
 
     tileSize = canvasSize.x / 9;
     _setBackground(canvasSize);
-  }
-
-  void spawnFly() {
-    // 減去飛蠅的寬度，是避免生成在螢幕的邊緣。
-    // 乘上最大的飛蠅(MachoFly)的尺寸倍數
-    double x = random.nextDouble() * (size.toRect().width - tileSize * 2.025);
-    double y = random.nextDouble() * (size.toRect().height - tileSize * 2.025);
-
-    switch (random.nextInt(5)) {
-      case 0:
-        add(HouseFly(this, Vector2(x, y)));
-        break;
-      case 1:
-        add(DroolerFly(this, Vector2(x, y)));
-        break;
-      case 2:
-        add(AglieFly(this, Vector2(x, y)));
-        break;
-      case 3:
-        add(MachoFly(this, Vector2(x, y)));
-        break;
-      case 4:
-        add(HungryFly(this, Vector2(x, y)));
-        break;
-      default:
-    }
+    add(GamePage());
   }
 
   void _setBackground(Vector2 canvasSize) async {
