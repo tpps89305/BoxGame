@@ -64,7 +64,8 @@ flutter:
   assets:
     - assets/images/bg/
     - assets/images/flies/
-  #   - images/a_dot_ham.jpeg
+    - assets/images/branding/
+    - assets/images/ui/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

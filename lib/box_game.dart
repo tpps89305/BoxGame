@@ -1,17 +1,30 @@
 import 'dart:math' hide log;
 
 import 'package:box_game/game_page.dart';
+import 'package:box_game/home_page.dart';
 import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show Canvas;
 
 class BoxGame extends FlameGame with HasTappableComponents {
   double tileSize = 0;
   final Random random = Random();
+  late final RouterComponent router;
 
   @override
   bool get debugMode => true;
+
+  @override
+  Future<void>? onLoad() async {
+    add(router = RouterComponent(
+      routes: {
+        'home': Route(HomePage.new),
+        'game': Route(GamePage.new),
+      },
+      initialRoute: 'home',
+    ));
+  }
 
   @override
   void update(double dt) {
@@ -29,7 +42,6 @@ class BoxGame extends FlameGame with HasTappableComponents {
 
     tileSize = canvasSize.x / 9;
     _setBackground(canvasSize);
-    add(GamePage());
   }
 
   void _setBackground(Vector2 canvasSize) async {
@@ -40,6 +52,7 @@ class BoxGame extends FlameGame with HasTappableComponents {
       sprite: sprite,
       size: size,
       position: position,
+      priority: -1,
     );
     add(background);
   }
