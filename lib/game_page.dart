@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:box_game/box_game.dart';
-import 'package:box_game/component/fly/fly.dart';
 import 'package:box_game/component/tap_detecter.dart';
+import 'package:box_game/fly_spawner.dart';
 import 'package:flame/components.dart';
 import 'package:box_game/component/fly/agile_fly.dart';
 import 'package:box_game/component/fly/drooler_fly.dart';
@@ -12,26 +12,14 @@ import 'package:box_game/component/fly/macho_fly.dart';
 
 class GamePage extends Component with HasGameRef<BoxGame> {
   final Random random = Random();
+  late FlySpawner _flySpawner;
 
   GamePage() : super(priority: 1);
 
   @override
   Future<void>? onLoad() async {
     spawnFly();
-    final flyNotifier = gameRef.componentsNotifier<Fly>();
-    flyNotifier.addListener(() {
-      final flies = flyNotifier.components;
-      bool isShouldAddFly = true;
-      for (var fly in flies) {
-        if (!fly.isDead) {
-          isShouldAddFly = false;
-          break;
-        }
-      }
-      if (isShouldAddFly) {
-        spawnFly();
-      }
-    });
+    _flySpawner = FlySpawner(gamePage: this);
 
     // 點擊到空白區域時，結束遊戲。
     add(TapDetecter(
@@ -39,6 +27,7 @@ class GamePage extends Component with HasGameRef<BoxGame> {
         gameRef.router.pushNamed('gameover');
       },
     ));
+    add(_flySpawner);
   }
 
   void spawnFly() {

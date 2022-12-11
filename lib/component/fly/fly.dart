@@ -73,7 +73,7 @@ abstract class Fly extends PositionComponent with Notifier, TapCallbacks {
         removeFromParent();
       }
     } else {
-      // TODO 計算距離和速度
+      // 計算距離和速度
       final velocity = (targetLocation - position)..scaleTo(speed);
       position.add(velocity * dt);
       Vector2 distance = targetLocation - position;
