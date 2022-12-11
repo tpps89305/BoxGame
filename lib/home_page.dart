@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:box_game/box_game.dart';
+import 'package:box_game/component/ui/credits_button.dart';
+import 'package:box_game/component/ui/help_button.dart';
 import 'package:box_game/component/ui/start_button.dart';
 import 'package:flame/components.dart';
 
@@ -8,13 +10,22 @@ class HomePage extends Component with HasGameRef<BoxGame> {
   HomePage() : super(priority: 0) {
     addAll([
       _startButton = StartButton(onPressed: () {
-        log("Start Button press", name: "HomePage");
         gameRef.router.pushNamed('game');
+      }),
+      _helpButton = HelpButton(onPressed: () {
+        log("Help Button press", name: "HomePage");
+      }),
+      _creditsButton = CreditsButton(onPressed: () {
+        log("Credits Button press", name: "HomePage");
       }),
     ]);
   }
 
   late StartButton _startButton;
+
+  late HelpButton _helpButton;
+
+  late CreditsButton _creditsButton;
 
   @override
   // ignore: avoid_renaming_method_parameters
@@ -23,6 +34,10 @@ class HomePage extends Component with HasGameRef<BoxGame> {
     _setBanner(canvasSize);
     _startButton.position = Vector2(
         canvasSize.x / 2 - ((gameRef.tileSize * 6) / 2), gameRef.tileSize * 10);
+    _helpButton.position = Vector2(gameRef.tileSize * .25,
+        gameRef.canvasSize.y - (gameRef.tileSize * 1.25));
+    _creditsButton.position = Vector2(gameRef.canvasSize.x - gameRef.tileSize * 1.25,
+        gameRef.canvasSize.y - (gameRef.tileSize * 1.25));
   }
 
   void _setBanner(Vector2 canvasSize) async {
