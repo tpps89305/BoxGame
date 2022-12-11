@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:box_game/box_game.dart';
-import 'package:box_game/component/fly/ui/start_button.dart';
+import 'package:box_game/component/ui/start_button.dart';
 import 'package:flame/components.dart';
 
 class HomePage extends Component with HasGameRef<BoxGame> {
