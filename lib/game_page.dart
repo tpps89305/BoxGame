@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:box_game/box_game.dart';
 import 'package:box_game/component/fly/fly.dart';
+import 'package:box_game/component/tap_detecter.dart';
 import 'package:flame/components.dart';
 import 'package:box_game/component/fly/agile_fly.dart';
 import 'package:box_game/component/fly/drooler_fly.dart';
@@ -31,6 +32,13 @@ class GamePage extends Component with HasGameRef<BoxGame> {
         spawnFly();
       }
     });
+
+    // 點擊到空白區域時，結束遊戲。
+    add(TapDetecter(
+      trigger: () {
+        gameRef.router.pushNamed('gameover');
+      },
+    ));
   }
 
   void spawnFly() {
