@@ -20,7 +20,7 @@ class GameOverPage extends Component with TapCallbacks, HasGameRef<BoxGame> {
   bool containsLocalPoint(Vector2 point) => true;
 
   @override
-  void onTapUp(TapUpEvent event) => gameRef.router.pop();
+  void onTapUp(TapUpEvent event) => gameRef.router.popUntilNamed('home');
 
   @override
   void render(Canvas canvas) {

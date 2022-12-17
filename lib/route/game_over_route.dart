@@ -11,7 +11,7 @@ class GameOverRoute extends Route {
     previousRoute!
       ..stopTime()
       ..addRenderEffect(
-        PaintDecorator.grayscale(opacity: 0.5)..addBlur(3.0),
+        PaintDecorator.grayscale(opacity: 1.0)..addBlur(1.0),
       );
   }
 
