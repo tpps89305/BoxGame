@@ -4,6 +4,7 @@ import 'package:box_game/box_game.dart';
 import 'package:box_game/component/ui/credits_button.dart';
 import 'package:box_game/component/ui/help_button.dart';
 import 'package:box_game/component/ui/start_button.dart';
+import 'package:box_game/constants.dart';
 import 'package:flame/components.dart';
 
 class HomePage extends Component with HasGameRef<BoxGame> {
@@ -14,9 +15,11 @@ class HomePage extends Component with HasGameRef<BoxGame> {
       }),
       _helpButton = HelpButton(onPressed: () {
         log("Help Button press", name: "HomePage");
+        gameRef.overlays.add(OverlayName.help);
       }),
       _creditsButton = CreditsButton(onPressed: () {
         log("Credits Button press", name: "HomePage");
+        gameRef.overlays.add(OverlayName.credits);
       }),
     ]);
   }
@@ -36,7 +39,8 @@ class HomePage extends Component with HasGameRef<BoxGame> {
         canvasSize.x / 2 - ((gameRef.tileSize * 6) / 2), gameRef.tileSize * 10);
     _helpButton.position = Vector2(gameRef.tileSize * .25,
         gameRef.canvasSize.y - (gameRef.tileSize * 1.25));
-    _creditsButton.position = Vector2(gameRef.canvasSize.x - gameRef.tileSize * 1.25,
+    _creditsButton.position = Vector2(
+        gameRef.canvasSize.x - gameRef.tileSize * 1.25,
         gameRef.canvasSize.y - (gameRef.tileSize * 1.25));
   }
 
