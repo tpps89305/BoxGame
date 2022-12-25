@@ -7,8 +7,11 @@ class AglieFly extends Fly {
   @override
   double get speed => 200;
 
-  AglieFly(boxGame, this.mposition)
-      : super(
+  AglieFly(
+    boxGame,
+    this.mposition, {
+    onFlyHasKilled,
+  }) : super(
           boxGame,
           mposition,
           flyingSpriteFileNames: [
@@ -16,5 +19,6 @@ class AglieFly extends Fly {
             'flies/agile-fly-2.png',
           ],
           deadSpriteFileName: 'flies/agile-fly-dead.png',
+          onFlyHasKilled: onFlyHasKilled,
         );
 }

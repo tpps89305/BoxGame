@@ -9,8 +9,9 @@ class DroolerFly extends Fly {
 
   DroolerFly(
     boxGame,
-    this.mposition,
-  ) : super(
+    this.mposition, {
+    onFlyHasKilled,
+  }) : super(
           boxGame,
           mposition,
           flyingSpriteFileNames: [
@@ -18,5 +19,6 @@ class DroolerFly extends Fly {
             'flies/drooler-fly-2.png',
           ],
           deadSpriteFileName: 'flies/drooler-fly-dead.png',
+          onFlyHasKilled: onFlyHasKilled,
         );
 }

@@ -6,8 +6,9 @@ class HungryFly extends Fly {
 
   HungryFly(
     boxGame,
-    this.mposition,
-  ) : super(
+    this.mposition, {
+    onFlyHasKilled,
+  }) : super(
           boxGame,
           mposition,
           flyingSpriteFileNames: [
@@ -16,5 +17,6 @@ class HungryFly extends Fly {
           ],
           deadSpriteFileName: 'flies/hungry-fly-dead.png',
           tileScale: 1.65,
+          onFlyHasKilled: onFlyHasKilled,
         );
 }

@@ -9,8 +9,9 @@ class MachoFly extends Fly {
 
   MachoFly(
     boxGame,
-    this.mposition,
-  ) : super(
+    this.mposition, {
+    onFlyHasKilled,
+  }) : super(
           boxGame,
           mposition,
           flyingSpriteFileNames: [
@@ -19,5 +20,6 @@ class MachoFly extends Fly {
           ],
           deadSpriteFileName: 'flies/macho-fly-dead.png',
           tileScale: 2.025,
+          onFlyHasKilled: onFlyHasKilled,
         );
 }

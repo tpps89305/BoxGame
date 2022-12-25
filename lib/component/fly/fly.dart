@@ -4,7 +4,8 @@ import 'package:flame/experimental.dart';
 import 'package:flame/extensions.dart';
 import 'dart:math' hide log;
 
-abstract class Fly extends PositionComponent with Notifier, TapCallbacks {
+abstract class Fly extends PositionComponent
+    with Notifier, TapCallbacks {
   late SpriteAnimationComponent flyingComponent;
   late SpriteComponent deadComponent;
 
@@ -17,12 +18,15 @@ abstract class Fly extends PositionComponent with Notifier, TapCallbacks {
   final Random random = Random();
   double tileScale;
 
+  Function()? onFlyHasKilled;
+
   Fly(
     this.game,
     Vector2 mposition, {
     this.tileScale = 1.5,
     required List<String> flyingSpriteFileNames,
     required String deadSpriteFileName,
+    this.onFlyHasKilled,
   }) : super(priority: 1) {
     size = Vector2(game.tileSize * tileScale, game.tileSize * tileScale);
     position = mposition;
@@ -54,9 +58,10 @@ abstract class Fly extends PositionComponent with Notifier, TapCallbacks {
   }
 
   void setTargetLocation() {
-    double x = random.nextDouble() * (game.size.toRect().width - game.tileSize * tileScale);
-    double y =
-        random.nextDouble() * (game.size.toRect().height - game.tileSize * tileScale);
+    double x = random.nextDouble() *
+        (game.size.toRect().width - game.tileSize * tileScale);
+    double y = random.nextDouble() *
+        (game.size.toRect().height - game.tileSize * tileScale);
     targetLocation = Vector2(x, y);
   }
 
@@ -89,7 +94,9 @@ abstract class Fly extends PositionComponent with Notifier, TapCallbacks {
       remove(flyingComponent);
       add(deadComponent);
       isDead = true;
-      notifyListeners();
+      if (onFlyHasKilled != null) {
+        onFlyHasKilled!();
+      }
     }
   }
 }

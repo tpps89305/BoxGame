@@ -7,8 +7,9 @@ class HouseFly extends Fly {
 
   HouseFly(
     boxGame,
-    this.mposition,
-  ) : super(
+    this.mposition, {
+    onFlyHasKilled,
+  }) : super(
           boxGame,
           mposition,
           flyingSpriteFileNames: [
@@ -16,5 +17,6 @@ class HouseFly extends Fly {
             'flies/house-fly-2.png',
           ],
           deadSpriteFileName: 'flies/house-fly-dead.png',
+          onFlyHasKilled: onFlyHasKilled,
         );
 }
