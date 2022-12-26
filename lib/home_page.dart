@@ -5,12 +5,14 @@ import 'package:box_game/component/ui/credits_button.dart';
 import 'package:box_game/component/ui/help_button.dart';
 import 'package:box_game/component/ui/start_button.dart';
 import 'package:box_game/constants.dart';
+import 'package:box_game/data_manager.dart';
 import 'package:flame/components.dart';
 
 class HomePage extends Component with HasGameRef<BoxGame> {
   HomePage() : super(priority: 0) {
     addAll([
       _startButton = StartButton(onPressed: () {
+        DataManager.score = 0;
         gameRef.router.pushNamed('game');
       }),
       _helpButton = HelpButton(onPressed: () {

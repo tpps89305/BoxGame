@@ -4,6 +4,7 @@ import 'dart:math' hide log;
 import 'package:box_game/box_game.dart';
 import 'package:box_game/component/tap_detecter.dart';
 import 'package:box_game/component/ui/score_display.dart';
+import 'package:box_game/data_manager.dart';
 import 'package:box_game/fly_spawner.dart';
 import 'package:flame/components.dart';
 import 'package:box_game/component/fly/agile_fly.dart';
@@ -15,7 +16,6 @@ import 'package:box_game/component/fly/macho_fly.dart';
 class GamePage extends Component with HasGameRef<BoxGame> {
   final Random random = Random();
   late FlySpawner _flySpawner;
-  int score = 0;
   final ScoreDisplay _scoreDisplay = ScoreDisplay();
 
   GamePage() : super(priority: 1);
@@ -35,7 +35,11 @@ class GamePage extends Component with HasGameRef<BoxGame> {
 
     _scoreDisplay.position = Vector2(0, 100);
     add(_scoreDisplay);
-    _scoreDisplay.setText(score.toString());
+  }
+
+  @override
+  void onMount() {
+    _scoreDisplay.setText(DataManager.score.toString());
   }
 
   @override
@@ -56,8 +60,8 @@ class GamePage extends Component with HasGameRef<BoxGame> {
           Vector2(x, y),
           onFlyHasKilled: () {
             log("Kill house fly");
-            score++;
-            _scoreDisplay.setText(score.toString());
+            DataManager.score++;
+            _scoreDisplay.setText(DataManager.score.toString());
           },
         ));
         break;
@@ -67,8 +71,8 @@ class GamePage extends Component with HasGameRef<BoxGame> {
           Vector2(x, y),
           onFlyHasKilled: () {
             log("Kill droller fly");
-            score++;
-            _scoreDisplay.setText(score.toString());
+            DataManager.score++;
+            _scoreDisplay.setText(DataManager.score.toString());
           },
         ));
         break;
@@ -78,8 +82,8 @@ class GamePage extends Component with HasGameRef<BoxGame> {
           Vector2(x, y),
           onFlyHasKilled: () {
             log("Kill aglie fly");
-            score++;
-            _scoreDisplay.setText(score.toString());
+            DataManager.score++;
+            _scoreDisplay.setText(DataManager.score.toString());
           },
         ));
         break;
@@ -89,8 +93,8 @@ class GamePage extends Component with HasGameRef<BoxGame> {
           Vector2(x, y),
           onFlyHasKilled: () {
             log("Kill macho fly");
-            score++;
-            _scoreDisplay.setText(score.toString());
+            DataManager.score++;
+            _scoreDisplay.setText(DataManager.score.toString());
           },
         ));
         break;
@@ -100,8 +104,8 @@ class GamePage extends Component with HasGameRef<BoxGame> {
           Vector2(x, y),
           onFlyHasKilled: () {
             log("Kill hungry fly");
-            score++;
-            _scoreDisplay.setText(score.toString());
+            DataManager.score++;
+            _scoreDisplay.setText(DataManager.score.toString());
           },
         ));
         break;
