@@ -19,13 +19,16 @@ class FlySpawner extends Component with HasGameRef<BoxGame> {
 
   FlySpawner({
     required this.gamePage,
-  }) {
-    start();
-  }
+  });
 
   @override
   Future<void>? onLoad() async {
     log("onLoad", name: "FlySpawner");
+  }
+
+  @override
+  void onMount() {
+    start();
   }
 
   @override

@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:math' hide log;
 
 import 'package:box_game/box_game.dart';
+import 'package:box_game/component/fly/fly.dart';
 import 'package:box_game/component/tap_detecter.dart';
 import 'package:box_game/component/ui/score_display.dart';
 import 'package:box_game/data_manager.dart';
@@ -28,6 +29,7 @@ class GamePage extends Component with HasGameRef<BoxGame> {
     // 點擊到空白區域時，結束遊戲。
     add(TapDetecter(
       trigger: () {
+        removeAllFlies();
         gameRef.router.pushNamed('gameover');
       },
     ));
@@ -111,5 +113,11 @@ class GamePage extends Component with HasGameRef<BoxGame> {
         break;
       default:
     }
+  }
+
+  removeAllFlies() {
+    final flyNotifier = gameRef.componentsNotifier<Fly>();
+    final flies = flyNotifier.components;
+    removeAll(flies);
   }
 }
