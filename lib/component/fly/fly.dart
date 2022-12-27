@@ -1,11 +1,13 @@
 import 'package:box_game/box_game.dart';
+import 'package:box_game/box_game_tools.dart';
 import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/extensions.dart';
 import 'dart:math' hide log;
 
-abstract class Fly extends PositionComponent
-    with Notifier, TapCallbacks {
+import 'package:flame_audio/flame_audio.dart';
+
+abstract class Fly extends PositionComponent with Notifier, TapCallbacks {
   late SpriteAnimationComponent flyingComponent;
   late SpriteComponent deadComponent;
 
@@ -91,6 +93,7 @@ abstract class Fly extends PositionComponent
   @override
   void onTapDown(TapDownEvent event) {
     if (!isDead) {
+      FlameAudio.play(BoxGameTools.getRandomOushAudioName());
       remove(flyingComponent);
       add(deadComponent);
       isDead = true;

@@ -7,12 +7,14 @@ import 'package:box_game/component/ui/start_button.dart';
 import 'package:box_game/constants.dart';
 import 'package:box_game/data_manager.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 
 class HomePage extends Component with HasGameRef<BoxGame> {
   HomePage() : super(priority: 0) {
     addAll([
-      _startButton = StartButton(onPressed: () {
+      _startButton = StartButton(onPressed: () async {
         DataManager.score = 0;
+        await FlameAudio.bgm.play('bgm/playing.mp3', volume: 0.5);
         gameRef.router.pushNamed('game');
       }),
       _helpButton = HelpButton(onPressed: () {
@@ -44,6 +46,13 @@ class HomePage extends Component with HasGameRef<BoxGame> {
     _creditsButton.position = Vector2(
         gameRef.canvasSize.x - gameRef.tileSize * 1.25,
         gameRef.canvasSize.y - (gameRef.tileSize * 1.25));
+  }
+
+  @override
+  void onMount() async {
+    log("Home Page on Mount");
+    await FlameAudio.bgm.stop();
+    await FlameAudio.bgm.play('bgm/home.mp3');
   }
 
   void _setBanner(Vector2 canvasSize) async {

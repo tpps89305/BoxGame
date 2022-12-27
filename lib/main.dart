@@ -3,6 +3,7 @@ import 'package:box_game/constants.dart';
 import 'package:box_game/data_manager.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -25,6 +26,11 @@ void main() async {
     'flies/macho-fly-2.png',
     'flies/macho-fly-dead.png',
   ]);
+  await FlameAudio.audioCache.loadAll(AssertName.hahaAudioNames);
+  await FlameAudio.audioCache.loadAll(AssertName.ouchAudioNames);
+  await FlameAudio.audioCache.loadAll(["bgm/home.mp3", "bgm/playing.mp3"]);
+  FlameAudio.bgm.initialize();
+
   runApp(const BoxGameApp());
 }
 
@@ -37,15 +43,6 @@ class BoxGameApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: BoxGamePage(),
@@ -133,6 +130,8 @@ class BoxGamePage extends StatelessWidget {
             return GestureDetector(
               onTap: () {
                 game.router.popUntilNamed("home");
+                FlameAudio.bgm.stop();
+                FlameAudio.bgm.play('bgm/home.mp3');
                 game.overlays.remove(OverlayName.gameOver);
               },
               child: Container(
@@ -151,9 +150,9 @@ class BoxGamePage extends StatelessWidget {
                         shadows: [
                           Shadow(
                             offset: const Offset(2, 2),
-                            color: Colors.green.shade800
+                            color: Colors.green.shade800,
                           )
-                        ]
+                        ],
                       ),
                     ),
                     Text(
@@ -166,7 +165,7 @@ class BoxGamePage extends StatelessWidget {
                             offset: Offset(2, 2),
                             color: Colors.black,
                           )
-                        ]
+                        ],
                       ),
                     ),
                     const SizedBox(height: 24),
