@@ -5,6 +5,7 @@ import 'package:box_game/box_game.dart';
 import 'package:box_game/component/fly/fly.dart';
 import 'package:box_game/component/tap_detecter.dart';
 import 'package:box_game/component/ui/score_display.dart';
+import 'package:box_game/constants.dart';
 import 'package:box_game/data_manager.dart';
 import 'package:box_game/fly_spawner.dart';
 import 'package:flame/components.dart';
@@ -31,6 +32,7 @@ class GamePage extends Component with HasGameRef<BoxGame> {
       trigger: () {
         removeAllFlies();
         gameRef.router.pushNamed('gameover');
+        gameRef.overlays.add(OverlayName.gameOver);
       },
     ));
     add(_flySpawner);

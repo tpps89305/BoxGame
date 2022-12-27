@@ -1,5 +1,6 @@
 import 'package:box_game/box_game.dart';
 import 'package:box_game/constants.dart';
+import 'package:box_game/data_manager.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
@@ -125,6 +126,59 @@ class BoxGamePage extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 alignment: Alignment.center,
                 child: Image.asset('assets/images/ui/dialog-credits.png'),
+              ),
+            );
+          },
+          OverlayName.gameOver: (context, BoxGame game) {
+            return GestureDetector(
+              onTap: () {
+                game.router.popUntilNamed("home");
+                game.overlays.remove(OverlayName.gameOver);
+              },
+              child: Container(
+                color: const Color.fromARGB(158, 86, 86, 86),
+                padding: const EdgeInsets.all(16),
+                alignment: Alignment.center,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset('assets/images/bg/lose-splash.png'),
+                    Text(
+                      "Your Score",
+                      style: TextStyle(
+                        color: Colors.pink,
+                        fontSize: 48,
+                        shadows: [
+                          Shadow(
+                            offset: const Offset(2, 2),
+                            color: Colors.green.shade800
+                          )
+                        ]
+                      ),
+                    ),
+                    Text(
+                      DataManager.score.toString(),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 64,
+                        shadows: [
+                          Shadow(
+                            offset: Offset(2, 2),
+                            color: Colors.black,
+                          )
+                        ]
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    const Text(
+                      "再接再厲",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           }
