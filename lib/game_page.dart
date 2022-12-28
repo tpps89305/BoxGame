@@ -1,8 +1,8 @@
 import 'dart:developer';
 import 'dart:math' hide log;
 
+import 'package:box_game/audio_manager.dart';
 import 'package:box_game/box_game.dart';
-import 'package:box_game/box_game_tools.dart';
 import 'package:box_game/component/fly/fly.dart';
 import 'package:box_game/component/tap_detecter.dart';
 import 'package:box_game/component/ui/score_display.dart';
@@ -15,7 +15,6 @@ import 'package:box_game/component/fly/drooler_fly.dart';
 import 'package:box_game/component/fly/house_fly.dart';
 import 'package:box_game/component/fly/hungry_fly.dart';
 import 'package:box_game/component/fly/macho_fly.dart';
-import 'package:flame_audio/flame_audio.dart';
 
 class GamePage extends Component with HasGameRef<BoxGame> {
   final Random random = Random();
@@ -33,8 +32,8 @@ class GamePage extends Component with HasGameRef<BoxGame> {
     add(TapDetecter(
       trigger: () async {
         removeAllFlies();
-        await FlameAudio.bgm.stop();
-        await FlameAudio.play(BoxGameTools.getRandomHaHaAudioName());
+        await AudioManager.stopBGM();
+        await AudioManager.playHaHaMusic();
         gameRef.router.pushNamed('gameover');
         gameRef.overlays.add(OverlayName.gameOver);
       },
