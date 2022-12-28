@@ -5,6 +5,8 @@ import 'package:flame/experimental.dart';
 import 'package:flame/extensions.dart';
 import 'dart:math' hide log;
 
+import 'package:flutter/material.dart';
+
 abstract class Fly extends PositionComponent with Notifier, TapCallbacks {
   late SpriteAnimationComponent flyingComponent;
   late SpriteComponent deadComponent;
@@ -19,6 +21,7 @@ abstract class Fly extends PositionComponent with Notifier, TapCallbacks {
   double tileScale;
 
   Function()? onFlyHasKilled;
+  double safeAreaPaddingTop = 0;
 
   Fly(
     this.game,
@@ -28,6 +31,7 @@ abstract class Fly extends PositionComponent with Notifier, TapCallbacks {
     required String deadSpriteFileName,
     this.onFlyHasKilled,
   }) : super(priority: 1) {
+    safeAreaPaddingTop = MediaQuery.of(game.buildContext!).padding.top;
     size = Vector2(game.tileSize * tileScale, game.tileSize * tileScale);
     position = mposition;
     _loadSprites(
@@ -61,7 +65,7 @@ abstract class Fly extends PositionComponent with Notifier, TapCallbacks {
     double x = random.nextDouble() *
         (game.size.toRect().width - game.tileSize * tileScale);
     double y = random.nextDouble() *
-        (game.size.toRect().height - game.tileSize * tileScale);
+        (game.size.toRect().height - game.tileSize * tileScale - safeAreaPaddingTop) + safeAreaPaddingTop;
     targetLocation = Vector2(x, y);
   }
 
