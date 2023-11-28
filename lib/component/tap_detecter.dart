@@ -13,12 +13,10 @@ class TapDetecter extends PositionComponent
 
   @override
   Future<void>? onLoad() async {
-    size = Vector2(gameRef.canvasSize.x, gameRef.canvasSize.y);
-  }
-
-  @override
-  void render(Canvas canvas) {
-    canvas.drawColor(Colors.green.withOpacity(0.2), BlendMode.srcATop);
+    final safeAreaTopPadding = MediaQuery.of(gameRef.buildContext!).padding.top;
+    size = Vector2(
+        gameRef.canvasSize.x, gameRef.canvasSize.y - safeAreaTopPadding);
+    position = Vector2(0, safeAreaTopPadding);
   }
 
   @override

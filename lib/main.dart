@@ -1,3 +1,4 @@
+import 'package:box_game/audio_manager.dart';
 import 'package:box_game/box_game.dart';
 import 'package:box_game/constants.dart';
 import 'package:box_game/data_manager.dart';
@@ -130,8 +131,7 @@ class BoxGamePage extends StatelessWidget {
             return GestureDetector(
               onTap: () {
                 game.router.popUntilNamed("home");
-                FlameAudio.bgm.stop();
-                FlameAudio.bgm.play('bgm/home.mp3');
+                AudioManager.playHomeBGM();
                 game.overlays.remove(OverlayName.gameOver);
               },
               child: Container(

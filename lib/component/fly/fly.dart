@@ -1,11 +1,11 @@
+import 'package:box_game/audio_manager.dart';
 import 'package:box_game/box_game.dart';
-import 'package:box_game/box_game_tools.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/extensions.dart';
 import 'dart:math' hide log;
 
-import 'package:flame_audio/flame_audio.dart';
+import 'package:flutter/material.dart';
 
 abstract class Fly extends PositionComponent with Notifier, TapCallbacks {
   late SpriteAnimationComponent flyingComponent;
@@ -21,6 +21,7 @@ abstract class Fly extends PositionComponent with Notifier, TapCallbacks {
   double tileScale;
 
   Function()? onFlyHasKilled;
+  double safeAreaPaddingTop = 0;
 
   Fly(
     this.game,
@@ -30,6 +31,7 @@ abstract class Fly extends PositionComponent with Notifier, TapCallbacks {
     required String deadSpriteFileName,
     this.onFlyHasKilled,
   }) : super(priority: 1) {
+    safeAreaPaddingTop = MediaQuery.of(game.buildContext!).padding.top;
     size = Vector2(game.tileSize * tileScale, game.tileSize * tileScale);
     position = mposition;
     _loadSprites(
@@ -63,7 +65,7 @@ abstract class Fly extends PositionComponent with Notifier, TapCallbacks {
     double x = random.nextDouble() *
         (game.size.toRect().width - game.tileSize * tileScale);
     double y = random.nextDouble() *
-        (game.size.toRect().height - game.tileSize * tileScale);
+        (game.size.toRect().height - game.tileSize * tileScale - safeAreaPaddingTop) + safeAreaPaddingTop;
     targetLocation = Vector2(x, y);
   }
 
@@ -93,7 +95,7 @@ abstract class Fly extends PositionComponent with Notifier, TapCallbacks {
   @override
   void onTapDown(TapDownEvent event) {
     if (!isDead) {
-      FlameAudio.play(BoxGameTools.getRandomOushAudioName());
+      AudioManager.playOuchMusic();
       remove(flyingComponent);
       add(deadComponent);
       isDead = true;
