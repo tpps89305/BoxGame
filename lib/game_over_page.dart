@@ -1,9 +1,7 @@
 import 'package:box_game/box_game.dart';
-import 'package:box_game/component/ui/lost_title.dart';
 import 'package:flame/components.dart';
-import 'package:flame/experimental.dart';
 import 'package:flame/extensions.dart';
-import 'package:flutter/material.dart';
+import 'package:flame/events.dart';
 
 class GameOverPage extends Component with TapCallbacks, HasGameRef<BoxGame> {
   // late LostTitle _lostTitle;

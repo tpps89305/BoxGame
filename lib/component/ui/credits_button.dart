@@ -1,6 +1,6 @@
 import 'package:box_game/box_game.dart';
 import 'package:flame/components.dart';
-import 'package:flame/experimental.dart';
+import 'package:flame/events.dart';
 
 class CreditsButton extends PositionComponent
     with TapCallbacks, HasGameRef<BoxGame> {

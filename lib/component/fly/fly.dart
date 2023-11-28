@@ -1,7 +1,7 @@
 import 'package:box_game/box_game.dart';
 import 'package:box_game/box_game_tools.dart';
 import 'package:flame/components.dart';
-import 'package:flame/experimental.dart';
+import 'package:flame/events.dart';
 import 'package:flame/extensions.dart';
 import 'dart:math' hide log;
 

@@ -4,11 +4,10 @@ import 'package:box_game/game_page.dart';
 import 'package:box_game/home_page.dart';
 import 'package:box_game/route/game_over_route.dart';
 import 'package:flame/components.dart';
-import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart' show Canvas;
 
-class BoxGame extends FlameGame with HasTappableComponents {
+class BoxGame extends FlameGame {
   double tileSize = 0;
   final Random random = Random();
   late final RouterComponent router;
