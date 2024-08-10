@@ -79,9 +79,9 @@ class BoxGamePage extends StatelessWidget {
                   decoration: const BoxDecoration(
                     color: Color.fromARGB(255, 82, 96, 14),
                   ),
-                  child: Column(
+                  child: const Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
+                    children: [
                       Padding(
                         padding: EdgeInsets.only(bottom: 8),
                         child: Text(
